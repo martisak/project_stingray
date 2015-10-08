@@ -1,0 +1,19 @@
+{
+	"show_video": true,
+	"camera": {
+		"resolution": [640, 480],
+		"fps": 32,
+		"warmup_time": 1.5,
+		"classifier": "/home/pi/opencv/data/haarcascades/haarcascade_frontalface_default.xml"
+		},
+	"dropbox": {
+		"use_dropbox": true,
+		"dropbox_key": "YOUR_DROPBOX_KEY",
+		"dropbox_secret": "YOUR_DROPBOX_SECRET",
+		"dropbox_base_path": "YOUR_DROPBOX_PATH" 
+		},
+	"launcher": {
+		"aim_multiplier": 0.5,
+		"fire_threshold": 10
+	}
+}
