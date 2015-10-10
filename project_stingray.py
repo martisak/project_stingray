@@ -33,12 +33,16 @@ conf = json.load(open("config.json"))
 
 # initialize the camera and grab a reference to the raw camera capture
 camera = PiCamera()
-
 camera.resolution = tuple(conf['camera']['resolution'])
 camera.framerate = conf['camera']['fps']
 
+# Output video
+fourcc = cv2.VideoWriter_fourcc(*'XVID')
+out = cv2.VideoWriter('output.avi',fourcc, camera.framerate , tuple(conf['camera']['resolution']))
+
 screenWidth, screenHeight = conf['camera']['resolution']
 
+# Control loop parameters
 aim_multiplier = conf['launcher']['aim_multiplier']
 fire_thresh = conf['launcher']['fire_threshold']
 
@@ -112,6 +116,7 @@ for frame in \
     # Draw crosshairs
     frame = drawcrosshair(frame)
     cv2.imshow("Frame", frame)
+    out.write(frame)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
@@ -119,6 +124,8 @@ for frame in \
     # clear the stream in preparation for the next frame
     rawCapture.truncate(0)
 
+out.release()
+cv2.destroyAllWindows()
 
 
 

@@ -80,4 +80,4 @@ pi@node3 ~ $ sudo chmod a+rw /dev/bus/usb/001/007
 ## Todo
 
 * Add code to compensate for targets further away
-* Save video
+* Save video only when finding a target
