@@ -8,6 +8,7 @@ There are many similar projects out there - here are a few that I found interest
 
 * [Basic motion detection and tracking with Python and OpenCV](http://www.pyimagesearch.com/2015/05/25/basic-motion-detection-and-tracking-with-python-and-opencv/)
 * [Sentinel](https://github.com/AlexNisnevich/sentinel) by Alex Nisnevich.
+* [RETALIATION - A Jenkins "Extreme Feedback" Contraption](https://github.com/codedance/Retaliation)
 
 ## Instructions 
 ### Parts
@@ -41,13 +42,17 @@ Bus 001 Device 004: ID 2101:8500 ActionStar
 Bus 001 Device 005: ID 0bda:8176 Realtek Semiconductor Corp. RTL8188CUS 802.11n WLAN Adapter
 Bus 001 Device 006: ID 2101:8501 ActionStar 
 Bus 001 Device 007: ID 2123:1010  
+```
 
+So in my example, the missile launcher was connected to bus 1 as device 7.
+
+```
 pi@node3 ~ $ sudo chmod a+rw /dev/bus/usb/001/007
 ```
+
+* If you are connecting the missile launcher directly to the Pi, then add `max_usb_current=1` to `/boot/config.txt` and reboot.  Check settings with `vcgencmd get_config int`.
 
 ## Todo
 
 * Add code to compensate for targets further away
 * Save video
-* See if I can make USB port supply more power
-
