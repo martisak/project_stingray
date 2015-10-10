@@ -2,6 +2,8 @@
 
 This is a face-tracking autonomous foam-missile launcher. It aims for your eyes - you have been warned! 
 
+![Project Stingray - v0.1](stingray-1.jpg)
+
 ## Acknowledgements
 
 There are many similar projects out there - here are a few that I found interesting. This project has been heavily influenced by these.
@@ -27,6 +29,29 @@ There are many similar projects out there - here are a few that I found interest
 * picamera 1.10
 
 I recommend installing libraries in a virtual environment. For installing OpenCV 3.0 I recommend [this guide](http://www.pyimagesearch.com/2015/07/27/installing-opencv-3-0-for-both-python-2-7-and-python-3-on-your-raspberry-pi-2/).
+
+### Configuration
+
+There is one config file named `config.json` which looks like this (non-implemented parts removed for clarity):
+
+```
+{
+	"camera": {
+		"resolution": [640, 480],
+		"fps": 32,
+		"warmup_time": 1.5,
+		"classifier": "/home/pi/opencv/data/haarcascades/haarcascade_frontalface_default.xml"
+		},
+	"launcher": {
+		"aim_multiplier": 0.5,
+		"fire_threshold": 10
+	}
+}
+```
+
+For a higher framerate, reduce resolution to 320x240. You might need to change the path to the classifier.
+
+The `aim_multiplier` is meant to reduce the corrections so that it doesn't overcorrect and go past the target but rather converge more slowly on to the target. I would like to make a better control loop, but this works pretty well!
 
 ### Other things
 
