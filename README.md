@@ -37,6 +37,8 @@ There is one config file named `config.json` which looks like this (non-implemen
 ```
 {
 	"camera": {
+		"show_video": false,
+		"save_video": true,
 		"resolution": [640, 480],
 		"fps": 32,
 		"warmup_time": 1.5,
@@ -81,3 +83,4 @@ pi@node3 ~ $ sudo chmod a+rw /dev/bus/usb/001/007
 
 * Add code to compensate for targets further away
 * Save video only when finding a target
+* Capture video while slewing

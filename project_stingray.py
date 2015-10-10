@@ -5,25 +5,82 @@ import time
 import cv2
 import thunder
 import json
+import math
 
 numberOfMissiles = 4
 
 colors = {
-        'white': (255, 255, 255)
+        'white': (255, 255, 255),
+        'blue': (255,0, 0)
     }
 
+def drawtarget(image, face ):
+
+    color = colors['blue']
+    x,y,w,h = face
+
+    center = (x + w / 2, y + h / 2 )
+
+    # top left
+    pt1 = (x, y)
+    pt2 = (x+5,y)
+    cv2.line(image, pt1, pt2, color)
+
+    pt1 = (x, y)
+    pt2 = (x,y+5)
+    cv2.line(image, pt1, pt2, color)
+
+    # top right
+    pt1 = (x+w, y)
+    pt2 = (x+w-5,y)
+    cv2.line(image, pt1, pt2, color)
+
+    pt1 = (x+w, y)
+    pt2 = (x+w,y+5)
+    cv2.line(image, pt1, pt2, color)
+
+    # bottom right
+    pt1 = (x+w, y+h)
+    pt2 = (x+w-5, y+h)
+    cv2.line(image, pt1, pt2, color)
+
+    pt1 = (x+w, y+h)
+    pt2 = (x+w, y+h-5)
+    cv2.line(image, pt1, pt2, color)
+
+    # bottom left
+    pt1 = (x, y+h)
+    pt2 = (x+5, y+h)
+    cv2.line(image, pt1, pt2, color)
+
+    pt1 = (x, y+h)
+    pt2 = (x, y+h-5)
+    cv2.line(image, pt1, pt2, color)
+
 def drawcrosshair(image):
+
     color = colors['white']
+
     pt1 = ((screenWidth / 2) - 20, screenHeight / 2)
-    pt2 = ((screenWidth / 2) + 20, screenHeight / 2)
+    pt2 = ((screenWidth / 2) - 5, screenHeight / 2)
+
+    cv2.line(image, pt1, pt2, color)
+
+    pt1 = ((screenWidth / 2) + 20, screenHeight / 2)
+    pt2 = ((screenWidth / 2) + 5, screenHeight / 2)
+
     cv2.line(image, pt1, pt2, color)
 
     pt1 = (screenWidth / 2, (screenHeight / 2) - 20)
-    pt2 = (screenWidth / 2, (screenHeight / 2) + 20)
+    pt2 = (screenWidth / 2, (screenHeight / 2) - 5)
 
     cv2.line(image, pt1, pt2, color)
 
-    return image
+    pt1 = (screenWidth / 2, (screenHeight / 2) + 20)
+    pt2 = (screenWidth / 2, (screenHeight / 2) + 5)
+
+    cv2.line(image, pt1, pt2, color)
+
 
 # Create missile launch controller - make sure user has access to USB port
 launcher = thunder.controller()
@@ -38,7 +95,7 @@ camera.framerate = conf['camera']['fps']
 
 # Output video
 fourcc = cv2.VideoWriter_fourcc(*'XVID')
-out = cv2.VideoWriter('output.avi',fourcc, camera.framerate , tuple(conf['camera']['resolution']))
+out = cv2.VideoWriter('output.avi',fourcc, camera.framerate/4 , tuple(conf['camera']['resolution']))
 
 screenWidth, screenHeight = conf['camera']['resolution']
 
@@ -65,7 +122,7 @@ for frame in \
     # Flip frame, since we have mouted camera upside-down
     frame = cv2.flip(frame,-1) 
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    
+
     faces = face_cascade.detectMultiScale(gray, 1.3, 5)
 
     biggestFace = None
@@ -73,7 +130,8 @@ for frame in \
 
     for face in faces:
         x,y,w,h = face
-        cv2.rectangle(frame,(x,y),(x+w,y+h), (255,0,0) , 2)
+
+        drawtarget(frame, face)
 
         if (w*h > biggestFaceArea):
             biggestFace = face
@@ -85,9 +143,8 @@ for frame in \
 
         aimPoint = (x + w / 2, y + h / 2 )
 
-        color = (255,0, 0)
+        
 
-        cv2.circle(frame, aimPoint, 5, color, thickness = -1)
 
         x_diff = abs( aimPoint[0] - camera.resolution[0] / 2 )
         y_diff = abs( aimPoint[1] - camera.resolution[1] / 2 )
@@ -98,7 +155,7 @@ for frame in \
         x = aim_multiplier * x_diff /(1.0 * camera.resolution[0])
         y = aim_multiplier * y_diff/(1.0 * camera.resolution[1])
         
-        if x_diff < fire_thresh and y_diff < fire_thresh and numberOfMissiles > 0:
+        if math.sqrt(x_diff**2 + y_diff**2) < fire_thresh and numberOfMissiles > 0:
             launcher.fire()
             print("[INFO] Fire!")
             #numberOfMissiles -= 1
@@ -114,9 +171,13 @@ for frame in \
                 launcher.down(y)
 
     # Draw crosshairs
-    frame = drawcrosshair(frame)
-    cv2.imshow("Frame", frame)
-    out.write(frame)
+    drawcrosshair(frame)
+
+    if conf['camera']['show_video']:
+        cv2.imshow("Frame", frame)
+
+    if conf['camera']['save_video']:
+        out.write(frame)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
                 break

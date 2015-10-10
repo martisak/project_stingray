@@ -1,6 +1,7 @@
 {
-	"show_video": true,
 	"camera": {
+		"show_video": false,
+		"save_video": true,
 		"resolution": [320,240],
 		"fps": 32,
 		"warmup_time": 1,
