@@ -85,4 +85,3 @@ pi@node3 ~ $ sudo chmod a+rw /dev/bus/usb/001/007
 
 * Add code to compensate for targets further away
 * Save video only when finding a target
-* Capture video while slewing
