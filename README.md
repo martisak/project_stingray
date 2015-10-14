@@ -4,6 +4,8 @@ This is a face-tracking autonomous foam-missile launcher. It aims for your eyes 
 
 ![Project Stingray - v0.1](stingray-1.jpg)
 
+![View from launcher](output_60mMh8.gif)
+
 ## Acknowledgements
 
 There are many similar projects out there - here are a few that I found interesting. This project has been heavily influenced by these.
