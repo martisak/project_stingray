@@ -20,7 +20,6 @@ There are many similar projects out there - here are a few that I found interest
 * [Raspberry Pi 2](https://www.raspberrypi.org/products/raspberry-pi-2-model-b/)
 * A camera. I used the [Raspberry Pi Camera Module](https://www.raspberrypi.org/products/camera-module/)
 * [Thunder USB Missile Launcher](http://dreamcheeky.com/thunder-missile-launcher)
-* USB Hub (since the missile launcher draws more current than the Raspberry USB ports can supply.)
 
 ### Software and libraries
 
