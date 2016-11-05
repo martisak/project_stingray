@@ -30,6 +30,7 @@ There are many similar projects out there - here are a few that I found interest
 * picamera 1.10
 
 I recommend installing libraries in a virtual environment. For installing OpenCV 3.0 I recommend [this guide](http://www.pyimagesearch.com/2015/07/27/installing-opencv-3-0-for-both-python-2-7-and-python-3-on-your-raspberry-pi-2/).
+You can install the other requirements with `pip install -r requirements.txt`.
 
 ### Configuration
 
