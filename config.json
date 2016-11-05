@@ -14,7 +14,9 @@
 		"dropbox_base_path": "YOUR_DROPBOX_PATH" 
 		},
 	"launcher": {
-		"aim_multiplier": 0.6,
+		"slew": true,
+		"fire": true,
+		"aim_multiplier": 0.4,
 		"fire_threshold": 20
 	}
 }
